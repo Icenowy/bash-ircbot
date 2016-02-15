@@ -27,8 +27,6 @@ echo "Nick $N" >&3
 
 PONGINFO="pong! All guys in ##Orz will have girl's clothes clothed! I'm version $V~"
 NZSTR="%s 快女装！"
-BOTCANNOTNZ="我是一只bot，怎么女装呢？"
-ORZCANNOTNZ="gumblex不允许Orizon女装。"
 
 stat=init
 
