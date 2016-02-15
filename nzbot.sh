@@ -38,11 +38,36 @@ send() {
 }
 
 get_command() {
-	echo "$1" | grep -q "PRIVMSG $C.*$2@$N"
+	echo "$1" | grep -q "PRIVMSG $C.*'$2@$N"
 }
 
 get_paramaters() {
-	echo "$1" | sed "s/^.*PRIVMSG $C.*$2@$N//g" | sed 's/^ //g' | sed 's///g'
+	echo "$1" | sed "s/^.*PRIVMSG $C.*'$2@$N//g" | sed 's/^ //g' | sed 's///g'
+}
+
+nz(){
+	local ok
+	ok=0
+	[ -e special_response_list ] && 
+	for i in $(cat special_response_list); do
+		if echo "$*" | grep -q $i; then
+			[ ! -e "special_response_item_$(echo $i | base64)" ] ||
+			send "$(cat "special_response_item_$(echo $i | base64)")"
+			ok=1
+			break
+		fi
+	done
+	if [ "$ok" = "0" ]; then
+		send "$(printf "$NZSTR" "$*")"
+	fi
+}
+
+regnz(){
+	local i
+	i=$1
+	echo $1 >> special_response_list
+	shift
+	echo "$*" > "special_response_item_$(echo $i | base64)"
 }
 
 # message dealer
@@ -73,13 +98,11 @@ get_paramaters() {
 			fi
 			if get_command "$a" nz; then
 				param="$(get_paramaters "$a" nz)"
-				if echo "$param" | grep -q orznzbot; then
-					send "$BOTCANNOTNZ"
-				elif echo "$param" | grep -q Orizon; then
-					send "$ORZCANNOTNZ"
-				else
-					send "$(printf "$NZSTR" "$param")"
-				fi
+				nz $param
+			fi
+			if get_command "$a" regnz; then
+				param="$(get_paramaters "$a" regnz)"
+				regnz $param
 			fi
 			;;
 		esac
