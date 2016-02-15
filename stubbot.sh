@@ -6,7 +6,9 @@ if [ ! "$C" ]; then
 	C="##Orz"
 fi
 
-echo "Stub Bash IRC Bot Version M" >&2 
+V="Mo"
+
+echo "Stub Bash IRC Bot Version $V" >&2 
 echo "I'm $N" >&2
 echo "Target is $C" >&2
 
@@ -27,14 +29,20 @@ stat=init
 			if echo "$a" | grep -q '^:.*\.freenode\.net.*'"$N"' :End of /MOTD command.$'; then
 				echo "JOIN $C" >&2
 				echo "JOIN $C" >&3
+				stat=joining
+			fi
+			;;
+		joining)
+			if echo "$a" | grep -q "^:$N\!.* JOIN $C"; then
+				echo "JOINED $C" >&2
 				stat=joined
 			fi
 			;;
 		joined)
 			# Insert dealing code here!
 			if echo "$a" | grep -q "PRIVMSG $C.*$N"; then
-				echo "PRIVMSG $C :I'm Stub Bash IRC Bot! Version M~" >&3
-				echo "Accessed" >&2
+				echo "PRIVMSG $C :I'm Stub Bash IRC Bot! Version $V~" >&3
+				echo "Got request" >&2
 			fi
 			;;
 		esac
