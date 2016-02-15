@@ -23,6 +23,11 @@ echo "User $N 8 * : $N" >&3
 echo "Nick $N" >&3
 # logined
 
+# String table
+
+PONGINFO="pong! All guys in ##Orz will have girl's clothes clothed! I'm version $V~"
+NZSTR="%s 快女装！"
+
 stat=init
 
 send() {
@@ -34,7 +39,9 @@ get_command() {
 	echo "$1" | grep -q "PRIVMSG $C.*$2@$N"
 }
 
-
+get_paramaters() {
+	echo "$1" | sed "s/^.*PRIVMSG $C.*$2@$N//g" | sed 's/^ //g' | sed 's///g'
+}
 
 # message dealer
 (
@@ -58,7 +65,13 @@ get_command() {
 		joined)
 			# Insert dealing code here!
 			if get_command "$a" ping; then
-				send "pong! All guys in ##Orz will have girl's clothes clothed! I'm version $V~"
+				send "$PONGINFO"
+				param="$(get_paramaters "$a" ping)"
+				[ "$param" != "" ] && send "$param"
+			fi
+			if get_command "$a" nz; then
+				param="$(get_paramaters "$a" nz)"
+				send "$(printf "$NZSTR" "$param")"
 			fi
 			;;
 		esac
