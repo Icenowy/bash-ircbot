@@ -12,7 +12,7 @@ if [ ! "$C" ]; then
 	fi
 fi
 
-V="M"
+V="Mo"
 
 echo "##Orz Nvzhuang IRC Bot Version $V" >&2 
 echo "I'm $N" >&2
