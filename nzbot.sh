@@ -27,6 +27,8 @@ echo "Nick $N" >&3
 
 PONGINFO="pong! All guys in ##Orz will have girl's clothes clothed! I'm version $V~"
 NZSTR="%s 快女装！"
+BOTCANNOTNZ="我是一只bot，怎么女装呢？"
+ORZCANNOTNZ="gumblex不允许Orizon女装。"
 
 stat=init
 
@@ -71,7 +73,13 @@ get_paramaters() {
 			fi
 			if get_command "$a" nz; then
 				param="$(get_paramaters "$a" nz)"
-				send "$(printf "$NZSTR" "$param")"
+				if echo "$param" | grep -q orznzbot; then
+					send "$BOTCANNOTNZ"
+				elif echo "$param" | grep -q Orizon; then
+					send "$ORZCANNOTNZ"
+				else
+					send "$(printf "$NZSTR" "$param")"
+				fi
 			fi
 			;;
 		esac
