@@ -66,6 +66,7 @@ regnz(){
 	echo $1 >> special_response_list
 	shift
 	echo "$*" > "special_response_item_$(echo $i | base64)"
+	send "Registered $i for $*"
 }
 
 # message dealer
