@@ -36,11 +36,11 @@ send() {
 }
 
 get_command() {
-	echo "$1" | grep -q "PRIVMSG $C.*'$2@$N"
+	echo "$1" | grep -q "PRIVMSG $C.*'$2@$N[ ]"
 }
 
 get_paramaters() {
-	echo "$1" | sed "s/^.*PRIVMSG $C.*'$2@$N//g" | sed 's/^ //g' | sed 's///g'
+	echo "$1" | sed "s/^.*PRIVMSG $C.*'$2@$N[ ]//g" | sed 's/^ //g' | sed 's///g'
 }
 
 nz(){
