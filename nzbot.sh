@@ -55,7 +55,7 @@ nz(){
 	ok=0
 	[ -e special_response_list ] && 
 	for i in $(cat special_response_list); do
-		if echo "$*" | grep -q $i; then
+		if [ "$*" = $i ]; then
 			[ ! -e "special_response_item_$(echo $i | base64)" ] ||
 			send "$(cat "special_response_item_$(echo $i | base64)")"
 			ok=1
@@ -81,7 +81,7 @@ nzz(){
 	ok=0
 	[ -e picture_list ] && 
 	for i in $(cat picture_list); do
-		if echo "$*" | grep -q $i; then
+		if [ "$*" = $i ]; then
 			[ ! -e "picture_item_$(echo $i | base64)" ] ||
 			send "$(cat "picture_item_$(echo $i | base64)")"
 			ok=1
