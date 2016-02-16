@@ -41,7 +41,7 @@ get_command() {
 }
 
 sec_mask() {
-	sed 's/\*/_/g' | sed 's/\?/_/g'
+	sed 's/\*/_/g' | sed 's/\?/_/g' | sed 's/\[/【/g' | sed 's/\]/】/g'
 }
 
 get_paramaters() {
