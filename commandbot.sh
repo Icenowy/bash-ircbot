@@ -40,11 +40,13 @@ get_command() {
 }
 
 sec_mask() {
-	sed 's/\*/_/g' | sed 's/\?/_/g' | sed 's/\[/【/g' | sed 's/\]/】/g'
+	cat
 }
 
 get_paramaters() {
+	set -f
 	echo "$1" | sed "s/^.*PRIVMSG $C.*'$2@$N[ ]//g" | sed 's/^ //g' | sed 's///g' | sec_mask
+	set +f
 }
 
 # message dealer
