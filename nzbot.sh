@@ -68,6 +68,7 @@ nz(){
 }
 
 regnz(){
+	[ ! "$2" ] && send "Registration failed. Nothing given." && return 1
 	local i
 	i=$1
 	echo $1 >> special_response_list
@@ -94,6 +95,7 @@ nzz(){
 }
 
 regnzz(){
+	[ ! "$2" ] && send "Registration failed. Nothing given." && return 1
 	local i
 	i=$1
 	shift
